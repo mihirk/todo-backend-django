@@ -10,6 +10,7 @@ from todo_backend_django import views
 urlpatterns = patterns('',
                        url(r'^$', RedirectView.as_view(url='/todos')),
                        url(r'^todos$', views.TodoList.as_view()),
+                       url(r'^todo/(?P<pk>[0-9]+)$', views.Todo.as_view()),
     # Examples:
     # url(r'^$', 'todo_backend_django.views.home', name='home'),
     # url(r'^todo_backend_django/', include('todo_backend_django.foo.urls')),

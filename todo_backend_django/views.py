@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.views import APIView
+
 from todo_backend_django.JSONResponse import JSONResponse
 
 from todo_backend_django.models import TodoItem
@@ -10,7 +11,7 @@ class TodoList(APIView):
     def get(self, request, format=None):
         todo_items = TodoItem.objects.all()
         serializer = TodoItemSerializer(todo_items, many=True)
-        return JSONResponse(serializer.data)
+        return JSONResponse(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         serializer = TodoItemSerializer(data=request.DATA)
@@ -23,3 +24,12 @@ class TodoList(APIView):
         TodoItem.objects.all().delete()
         return JSONResponse(None, status=status.HTTP_204_NO_CONTENT)
 
+
+class Todo(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            todoItem = TodoItem.objects.get(pk=pk)
+            serializer = TodoItemSerializer(todoItem)
+        except TodoItem.DoesNotExist:
+            return JSONResponse(None, status=status.HTTP_400_BAD_REQUEST)
+        return JSONResponse(serializer.data, status=status.HTTP_200_OK)
