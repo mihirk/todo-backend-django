@@ -16,7 +16,10 @@ class TodoList(APIView):
     def post(self, request, format=None):
         serializer = TodoItemSerializer(data=request.DATA)
         if serializer.is_valid():
-            serializer.save()
+            saved_item = serializer.save()
+            saved_item.url = request.build_absolute_uri('/todo/' + str(saved_item.id))
+            saved_item.save()
+            serializer = TodoItemSerializer(instance=saved_item)
             return JSONResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JSONResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
