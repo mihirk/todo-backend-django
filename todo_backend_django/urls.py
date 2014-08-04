@@ -3,8 +3,10 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
+from todo_backend_django.views import todo_list
 
 urlpatterns = patterns('',
+                       url(r'^todos$', 'todo_backend_django.views.todo_list'),
     # Examples:
     # url(r'^$', 'todo_backend_django.views.home', name='home'),
     # url(r'^todo_backend_django/', include('todo_backend_django.foo.urls')),
