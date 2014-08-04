@@ -4,11 +4,12 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 from django.views.generic import RedirectView
-from todo_backend_django.views import todo_list
+from rest_framework.urlpatterns import format_suffix_patterns
+from todo_backend_django import views
 
 urlpatterns = patterns('',
                        url(r'^$', RedirectView.as_view(url='/todos')),
-                       url(r'^todos$', 'todo_backend_django.views.todo_list'),
+                       url(r'^todos$', views.TodoList.as_view()),
     # Examples:
     # url(r'^$', 'todo_backend_django.views.home', name='home'),
     # url(r'^todo_backend_django/', include('todo_backend_django.foo.urls')),
@@ -19,3 +20,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns)
