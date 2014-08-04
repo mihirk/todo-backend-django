@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework.renderers import JSONRenderer
 from todo_backend_django.models import TodoItem
 from todo_backend_django.serializers import TodoItemSerializer
@@ -14,6 +14,10 @@ class JSONResponse(HttpResponse):
 
 def todo_list(request):
     if request.method == 'GET':
-        snippets = TodoItem.objects.all()
-        serializer = TodoItemSerializer(snippets, many=True)
+        todo_items = TodoItem.objects.all()
+        serializer = TodoItemSerializer(todo_items, many=True)
         return JSONResponse(serializer.data)
+
+def home():
+    return HttpResponseRedirect("/todos")
+

@@ -6,6 +6,7 @@ from django.conf.urls import patterns, include, url
 from todo_backend_django.views import todo_list
 
 urlpatterns = patterns('',
+                       url(r'^$', 'todo_backend_django.views.home'),
                        url(r'^todos$', 'todo_backend_django.views.todo_list'),
     # Examples:
     # url(r'^$', 'todo_backend_django.views.home', name='home'),
