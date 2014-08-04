@@ -7,6 +7,3 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
-        self.__setitem__('access-control-allow-origin', '*')
-        self.__setitem__('access-control-allow-headers', 'Content-Type')
-        self.__setitem__('access-control-allow-methods', 'GET,HEAD,POST,DELETE,OPTIONS,PUT')
