@@ -24,7 +24,6 @@ class TodoList(APIView):
         TodoItem.objects.all().delete()
         return JSONResponse(None, status=status.HTTP_204_NO_CONTENT)
 
-
 class Todo(APIView):
     def get(self, request, pk, format=None):
         try:
@@ -33,3 +32,22 @@ class Todo(APIView):
         except TodoItem.DoesNotExist:
             return JSONResponse(None, status=status.HTTP_400_BAD_REQUEST)
         return JSONResponse(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk, format=None):
+        try:
+            todoItem = TodoItem.objects.get(pk=pk)
+            todoItem.delete()
+        except TodoItem.DoesNotExist:
+            return JSONResponse(None, status=status.HTTP_400_BAD_REQUEST)
+        return JSONResponse(None, status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, pk, format=None):
+        try:
+            todoItem = TodoItem.objects.get(pk=pk)
+        except TodoItem.DoesNotExist:
+            return JSONResponse(None, status=status.HTTP_400_BAD_REQUEST)
+        serializer = TodoItemSerializer(data=request.DATA, instance=todoItem, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=status.HTTP_200_OK)
+        return JSONResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
