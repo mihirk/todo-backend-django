@@ -3,10 +3,11 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
+from django.views.generic import RedirectView
 from todo_backend_django.views import todo_list
 
 urlpatterns = patterns('',
-                       url(r'^$', 'todo_backend_django.views.home'),
+                       url(r'^$', RedirectView.as_view(url='/todos')),
                        url(r'^todos$', 'todo_backend_django.views.todo_list'),
     # Examples:
     # url(r'^$', 'todo_backend_django.views.home', name='home'),

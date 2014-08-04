@@ -17,7 +17,3 @@ def todo_list(request):
         todo_items = TodoItem.objects.all()
         serializer = TodoItemSerializer(todo_items, many=True)
         return JSONResponse(serializer.data)
-
-def home():
-    return HttpResponseRedirect("/todos")
-
