@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
+
 from todo_backend_django.models import TodoItem
 from todo_backend_django.serializers import TodoItemSerializer
 
@@ -10,7 +11,8 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
         self.__setitem__('Access-Control-Allow-Origin', '*')
-        self.__setitem__('Access-Control-Allow-Headers', '*')
+        self.__setitem__('Access-Control-Allow-Headers', 'Content-Type')
+
 
 def todo_list(request):
     if request.method == 'GET':
